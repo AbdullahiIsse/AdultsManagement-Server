@@ -29,6 +29,7 @@ namespace AdultsWebApi
         {
             services.AddControllers();
             services.AddScoped<IAdultData, AdultData>();
+            services.AddScoped<IUserService, InMemoryUserService>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "AdultsWebApi", Version = "v1"});

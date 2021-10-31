@@ -26,6 +26,7 @@ namespace DNP_Assignment.Data
                 }
             }.ToList();
         }
+        
 
 
         public User ValidateUser(string userName, string Password)
