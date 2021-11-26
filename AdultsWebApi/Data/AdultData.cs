@@ -9,31 +9,25 @@ namespace AdultsWebApi.Data
 {
     public class AdultData : IAdultData
     {
-
-      
         private AdultUserDbContext adultUserDbContext;
 
         public AdultData()
         {
-
             adultUserDbContext = new AdultUserDbContext();
-
         }
 
-       
 
         public async Task<List<Adult>> GetAdults()
         {
-            var list = await adultUserDbContext.Adults.Include(j=>j.JobTitle).ToListAsync();
+            var list = await adultUserDbContext.Adults.Include(j => j.JobTitle).ToListAsync();
             return list;
-
         }
 
         public async Task<Adult> AddAdults(Adult adult)
         {
-          await  adultUserDbContext.Adults.AddAsync(adult);
-          await adultUserDbContext.Jobs.AddAsync(adult.JobTitle);
-          await  adultUserDbContext.SaveChangesAsync();
+            await adultUserDbContext.Adults.AddAsync(adult);
+            await adultUserDbContext.Jobs.AddAsync(adult.JobTitle);
+            await adultUserDbContext.SaveChangesAsync();
 
             return adult;
         }
@@ -42,18 +36,16 @@ namespace AdultsWebApi.Data
         {
             try
             {
-                Adult firstAsync = await adultUserDbContext.Adults.Include(j => j.JobTitle)
+                Adult firstAsync = await adultUserDbContext.Adults
                     .FirstAsync(adult => adult.Id == adultId);
                 adultUserDbContext.Remove(firstAsync);
                 await adultUserDbContext.SaveChangesAsync();
             }
             catch (InvalidOperationException e)
             {
+                Console.WriteLine(e);
                 throw new Exception("User not found");
-               
             }
-           
-
         }
 
         public async Task<Adult> Update(Adult adult)
@@ -76,9 +68,7 @@ namespace AdultsWebApi.Data
             catch (InvalidOperationException e)
             {
                 throw new Exception("User not found");
-               
             }
-           
         }
     }
 }
