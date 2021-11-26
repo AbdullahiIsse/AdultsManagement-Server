@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using DNP_Assignment.Data;
+using AdultsWebApi.Data;
 using Microsoft.AspNetCore.Mvc;
 using Models;
 
@@ -25,7 +25,7 @@ namespace AdultsWebApi.Controllers
         {
             try
             {
-                IList<Adult> adults = adultData.GetAdults();
+                IList<Adult> adults = await adultData.GetAdults();
 
                 return Ok(adults);
             }
@@ -43,7 +43,7 @@ namespace AdultsWebApi.Controllers
         {
             try
             {
-                Adult adult =  adultData.Get(id);
+                Adult adult = await adultData.Get(id);
                 return Ok(adult);
             }
             catch (Exception e)
@@ -59,7 +59,7 @@ namespace AdultsWebApi.Controllers
         {
             try
             {
-                Adult adultAdded = adultData.AddAdults(adult);
+                Adult adultAdded = await adultData.AddAdults(adult);
                 return Created($"/{adultAdded.Id}", adultAdded);
             }
             catch (Exception e)
@@ -95,7 +95,7 @@ namespace AdultsWebApi.Controllers
         {
             try
             {
-                Adult update = adultData.Update(adult);
+                Adult update = await adultData.Update(adult);
                 return Ok(update);
             }
             catch (Exception e)

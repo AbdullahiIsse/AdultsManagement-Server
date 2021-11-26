@@ -3,7 +3,7 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Models {
 public class Person {
-    
+    [Key]
     public int Id { get; set; }
     
     [Required,NotNull] public string FirstName { get; set; }

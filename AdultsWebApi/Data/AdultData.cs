@@ -1,60 +1,64 @@
 using System.Collections.Generic;
-using System.Linq;
-using FileData;
+using System.Threading.Tasks;
+using AdultsWebApi.DataAccess;
+using Microsoft.EntityFrameworkCore;
 using Models;
 
-namespace DNP_Assignment.Data
+namespace AdultsWebApi.Data
 {
     public class AdultData : IAdultData
     {
 
       
-        private FileContext adultFileContext;
+        private AdultUserDbContext adultUserDbContext;
 
         public AdultData()
         {
 
-            adultFileContext = new FileContext();
+            adultUserDbContext = new AdultUserDbContext();
 
         }
 
        
 
-        public IList<Adult> GetAdults()
+        public async Task<List<Adult>> GetAdults()
         {
-           
-            return adultFileContext.Adults;
-            
+            var list = await adultUserDbContext.Adults.Include(j=>j.JobTitle).ToListAsync();
+            return list;
+
         }
 
-        public Adult AddAdults(Adult adult)
+        public async Task<Adult> AddAdults(Adult adult)
         {
-            int max = adultFileContext.Adults.Max(adult => adult.Id);
-            adult.Id =(++max);
-            adultFileContext.Adults.Add(adult);
-            adultFileContext.SaveChanges();
+          await  adultUserDbContext.Adults.AddAsync(adult);
+          await adultUserDbContext.Jobs.AddAsync(adult.JobTitle);
+          await  adultUserDbContext.SaveChangesAsync();
 
             return adult;
         }
 
-        public void RemoveAdults(int adultId)
+        public async void RemoveAdults(int adultId)
         {
-            
-            Adult toRemove = adultFileContext.Adults.First(a => a.Id == adultId);
-            adultFileContext.Adults.Remove(toRemove);
-            adultFileContext.SaveChanges();
+            Adult firstAsync = await adultUserDbContext.Adults.Include(j => j.JobTitle)
+                .FirstAsync(adult => adult.Id == adultId);
+            adultUserDbContext.Remove(firstAsync);
+            await adultUserDbContext.SaveChangesAsync();
+
         }
 
-        public Adult Update(Adult adult)
+        public async Task<Adult> Update(Adult adult)
         {
-            adultFileContext.Update(adult);
+            adultUserDbContext.Update(adult);
 
             return adult;
         }
 
-        public Adult Get(int id)
+        public async Task<Adult> Get(int id)
         {
-            return adultFileContext.Adults.FirstOrDefault(a => a.Id == id);
+            Adult firstAsync = await adultUserDbContext.Adults.Include(j => j.JobTitle)
+                .FirstAsync(adult => adult.Id == id);
+            
+            return firstAsync;
         }
     }
 }

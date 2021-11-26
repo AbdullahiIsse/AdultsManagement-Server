@@ -1,11 +1,11 @@
+using System.Threading.Tasks;
+using AdultsWebApi.Models;
 
-using System.Collections.Generic;
-
-namespace DNP_Assignment.Data
+namespace AdultsWebApi.Data
 {
     public interface IUserService
     {
-        User ValidateUser(string userName, string Password);
+        Task<User> ValidateUser(string userName, string Password);
        
     }
 }

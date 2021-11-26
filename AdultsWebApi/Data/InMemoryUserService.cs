@@ -1,48 +1,36 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using AdultsWebApi.DataAccess;
+using AdultsWebApi.Models;
+using Microsoft.EntityFrameworkCore;
 
-
-
-namespace DNP_Assignment.Data
+namespace AdultsWebApi.Data
 {
     public class InMemoryUserService : IUserService
     {
-        private List<User> users;
-
-        public InMemoryUserService()
-        {
-            users = new[]
-            {
-                new User
-                {
-                    City = "Horsens", Domain = "via.dk", Password = "123456", Role = "Teacher", BirthYear = 1986,
-                    SecurityLevel = 4, UserName = "bob"
-                },
-                new User
-                {
-                    City = "Aarhus", Domain = "hotmail.com", Password = "123456", Role = "Student", BirthYear = 1998,
-                    SecurityLevel = 2, UserName = "Jakob"
-                }
-            }.ToList();
-        }
         
-
-
-        public User ValidateUser(string userName, string Password)
+        public async Task<User> ValidateUser(string userName, string Password)
         {
-            User first = users.FirstOrDefault(user => user.UserName.Equals(userName));
-            if (first == null)
+            try
+            {
+                using AdultUserDbContext adultUserDbContext = new AdultUserDbContext();
+                
+                User first = await adultUserDbContext.Users.FirstAsync(user => user.UserName.Equals(userName));
+                
+            
+                if (!first.Password.Equals(Password))
+                {
+                    throw new Exception("Incorrect password");
+                }
+
+                return first;
+            }
+            catch (InvalidOperationException e)
             {
                 throw new Exception("User not found");
+               
             }
-
-            if (!first.Password.Equals(Password))
-            {
-                throw new Exception("Incorrect password");
-            }
-
-            return first;
+           
         }
     }
 }

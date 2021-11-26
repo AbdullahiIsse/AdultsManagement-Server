@@ -1,7 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using DNP_Assignment.Data;
+using AdultsWebApi.Data;
+using AdultsWebApi.Models;
 using Microsoft.AspNetCore.Mvc;
 
 
@@ -26,7 +26,7 @@ namespace AdultsWebApi.Controllers
         {
             try
             {
-                User users = UserService.ValidateUser(username,password);
+                User users = await UserService.ValidateUser(username,password);
                 return Ok(users);
             }
             catch (Exception e)
