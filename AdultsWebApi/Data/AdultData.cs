@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using AdultsWebApi.DataAccess;
@@ -39,26 +40,45 @@ namespace AdultsWebApi.Data
 
         public async void RemoveAdults(int adultId)
         {
-            Adult firstAsync = await adultUserDbContext.Adults.Include(j => j.JobTitle)
-                .FirstAsync(adult => adult.Id == adultId);
-            adultUserDbContext.Remove(firstAsync);
-            await adultUserDbContext.SaveChangesAsync();
+            try
+            {
+                Adult firstAsync = await adultUserDbContext.Adults.Include(j => j.JobTitle)
+                    .FirstAsync(adult => adult.Id == adultId);
+                adultUserDbContext.Remove(firstAsync);
+                await adultUserDbContext.SaveChangesAsync();
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new Exception("User not found");
+               
+            }
+           
 
         }
 
         public async Task<Adult> Update(Adult adult)
         {
             adultUserDbContext.Update(adult);
+            await adultUserDbContext.SaveChangesAsync();
 
             return adult;
         }
 
         public async Task<Adult> Get(int id)
         {
-            Adult firstAsync = await adultUserDbContext.Adults.Include(j => j.JobTitle)
-                .FirstAsync(adult => adult.Id == id);
-            
-            return firstAsync;
+            try
+            {
+                Adult firstAsync = await adultUserDbContext.Adults.Include(j => j.JobTitle)
+                    .FirstAsync(adult => adult.Id == id);
+
+                return firstAsync;
+            }
+            catch (InvalidOperationException e)
+            {
+                throw new Exception("User not found");
+               
+            }
+           
         }
     }
 }

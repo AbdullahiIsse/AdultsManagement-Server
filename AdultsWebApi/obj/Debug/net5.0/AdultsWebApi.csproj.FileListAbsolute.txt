@@ -28,7 +28,6 @@ C:\Users\abdul\RiderProjects\AdultsWebApi\AdultsWebApi\obj\Debug\net5.0\AdultsWe
 C:\Users\abdul\RiderProjects\AdultsWebApi\AdultsWebApi\obj\Debug\net5.0\ref\AdultsWebApi.dll
 C:\Users\abdul\RiderProjects\AdultsWebApi\AdultsWebApi\obj\Debug\net5.0\AdultsWebApi.pdb
 C:\Users\abdul\RiderProjects\AdultsWebApi\AdultsWebApi\obj\Debug\net5.0\AdultsWebApi.genruntimeconfig.cache
-C:\Users\abdul\RiderProjects\DNPAssignmentWebApi\AdultsWebApi\bin\Debug\net5.0\adults.json
 C:\Users\abdul\RiderProjects\DNPAssignmentWebApi\AdultsWebApi\bin\Debug\net5.0\appsettings.Development.json
 C:\Users\abdul\RiderProjects\DNPAssignmentWebApi\AdultsWebApi\bin\Debug\net5.0\appsettings.json
 C:\Users\abdul\RiderProjects\DNPAssignmentWebApi\AdultsWebApi\bin\Debug\net5.0\AdultsWebApi.exe
