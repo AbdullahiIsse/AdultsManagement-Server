@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AdultsWebApi.Data;
+using AdultsWebApi.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -30,6 +31,7 @@ namespace AdultsWebApi
             services.AddControllers();
             services.AddScoped<IAdultData, AdultData>();
             services.AddScoped<IUserService,InMemoryUserService>();
+            services.AddDbContext<AdultUserDbContext>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo {Title = "AdultsWebApi", Version = "v1"});
